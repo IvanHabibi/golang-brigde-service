@@ -21,6 +21,15 @@ type Person struct {
 	Lastname  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
 }
 
+type User struct {
+	Username	string             `json:"username,omitempty" bson:"firstname,omitempty"`
+	Password	string             `json:"password,omitempty" bson:"lastname,omitempty"`
+	Name  		string             `json:"name,omitempty" bson:"lastname,omitempty"`
+	Email		string             `json:"email,omitempty" bson:"lastname,omitempty"`
+}
+
+
+
 func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("content-type", "application/json")	
 
@@ -55,9 +64,10 @@ func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
 }
 
 func GetPeopleEndpoint(response http.ResponseWriter, request *http.Request) {
+
 	response.Header().Set("content-type", "application/json")
-	var people []Person
-	resp, err := http.Get(os.Getenv("JAVA_MICROSERVICE_URL")+"/people")
+	var users []User
+	resp, err := http.Get(os.Getenv("JAVA_MICROSERVICE_URL")+"/users")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -67,18 +77,36 @@ func GetPeopleEndpoint(response http.ResponseWriter, request *http.Request) {
 		log.Fatalln(err)
 	}
 
-	json.Unmarshal(body,&people)
+	json.Unmarshal(body,&users)
 	
 	log.Println(string(body))
-	json.NewEncoder(response).Encode(people)
+	json.NewEncoder(response).Encode(users)
+
+	// response.Header().Set("content-type", "application/json")
+	// var people []Person
+	// resp, err := http.Get(os.Getenv("JAVA_MICROSERVICE_URL")+"/people")
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+	// defer resp.Body.Close()
+	// body, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+
+	// json.Unmarshal(body,&people)
+	
+	// log.Println(string(body))
+	// json.NewEncoder(response).Encode(people)
 	
 }
 func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
+
 	response.Header().Set("content-type", "application/json")
-	var person Person
+	var user User
 	params := mux.Vars(request)
-	log.Println(params["id"])
-	resp, err := http.Get(os.Getenv("JAVA_MICROSERVICE_URL")+"/person/"+params["id"])
+	log.Println(params["username"])
+	resp, err := http.Get(os.Getenv("JAVA_MICROSERVICE_URL")+"/users/"+params["username"])
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -89,9 +117,28 @@ func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
 		log.Fatalln(err)
 	}
 
-	json.Unmarshal(body,&person)
+	json.Unmarshal(body,&user)
 	log.Println(string(body))
-	json.NewEncoder(response).Encode(person)
+	json.NewEncoder(response).Encode(user)
+
+	// response.Header().Set("content-type", "application/json")
+	// var person Person
+	// params := mux.Vars(request)
+	// log.Println(params["id"])
+	// resp, err := http.Get(os.Getenv("JAVA_MICROSERVICE_URL")+"/person/"+params["id"])
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+	// defer resp.Body.Close()
+
+	// body, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+
+	// json.Unmarshal(body,&person)
+	// log.Println(string(body))
+	// json.NewEncoder(response).Encode(person)
 
 }
 
