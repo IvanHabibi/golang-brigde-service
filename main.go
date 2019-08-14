@@ -28,8 +28,6 @@ type User struct {
 	Email		string             `json:"email,omitempty" bson:"email,omitempty"`
 }
 
-
-
 func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("content-type", "application/json")	
 
@@ -240,8 +238,8 @@ func main() {
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 	router := mux.NewRouter()
 	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
-	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
-	router.HandleFunc("/person/{id}", GetPersonEndpoint).Methods("GET")
+	router.HandleFunc("/users", GetPeopleEndpoint).Methods("GET")
+	router.HandleFunc("/users/{username}", GetPersonEndpoint).Methods("GET")
 	router.HandleFunc("/person/{id}", DeletePersonEndpoint).Methods("DELETE")
 	router.HandleFunc("/person/{id}", UpdatePersonEndpoint).Methods("PUT")
 	
