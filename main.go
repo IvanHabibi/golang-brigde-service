@@ -23,9 +23,9 @@ type Person struct {
 
 type User struct {
 	Username	string             `json:"username,omitempty" bson:"firstname,omitempty"`
-	Password	string             `json:"password,omitempty" bson:"lastname,omitempty"`
-	Name  		string             `json:"name,omitempty" bson:"lastname,omitempty"`
-	Email		string             `json:"email,omitempty" bson:"lastname,omitempty"`
+	Password	string             `json:"password,omitempty" bson:"password,omitempty"`
+	Name  		string             `json:"name,omitempty" bson:"name,omitempty"`
+	Email		string             `json:"email,omitempty" bson:"email,omitempty"`
 }
 
 
